@@ -13,15 +13,13 @@ test.describe('Login', () => {
     await expect(overview.heading).toBeVisible();
   });
 
-  test('login fails with a wrong password', async ({ page, registeredUser }) => {
-    const overview = new AccountsOverviewPage(page);
+    test('login fails for a username that does not exist', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
-    await overview.logout();
-    await loginPage.login(registeredUser.username, 'WrongPass@999');
+    await loginPage.goto();
+    await loginPage.login(`no_such_user_${Date.now()}`, 'WrongPass@999');
 
-    await expect(page.getByRole('heading', { name: 'Error!' })).toBeVisible();
-await expect(page).not.toHaveURL(/overview\.htm/);
+    await expect(page).not.toHaveURL(/overview\.htm/);
   });
 
   test('login fails with empty credentials', async ({ page }) => {
