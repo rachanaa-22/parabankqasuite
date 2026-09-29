@@ -20,7 +20,8 @@ test.describe('Login', () => {
     await overview.logout();
     await loginPage.login(registeredUser.username, 'WrongPass@999');
 
-    await expect(page.getByText('The username and password could not be verified')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Error!' })).toBeVisible();
+await expect(page).not.toHaveURL(/overview\.htm/);
   });
 
   test('login fails with empty credentials', async ({ page }) => {
